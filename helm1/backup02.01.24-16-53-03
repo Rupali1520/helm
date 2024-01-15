@@ -1,0 +1,35 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+-- Started on 2024-01-02 16:53:38 IST
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+
+--
+-- Roles
+--
+
+CREATE ROLE postgres;
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'md5e9e3621cfe0ec74cd9619095353208df';
+CREATE ROLE shubham;
+ALTER ROLE shubham WITH NOSUPERUSER INHERIT NOCREATEROLE CREATEDB LOGIN NOREPLICATION NOBYPASSRLS PASSWORD 'md59f59f4bda180646cc03a8dd53b573c9a';
+
+
+
+
+
+
+--
+-- Databases
+--
+
+--
+-- Database "template1" dump
+--
+
+\connect template1
+

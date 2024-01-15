@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pg-config
+data:
+  POSTGRES_USER: "{{ .Values.postgres.user | default "postgres" }}"
+  POSTGRES_HOST: "{{ .Values.postgres.host }}"
+  POSTGRES_PORT: "{{ .Values.postgres.port }}"
+  URL: "{{ .Values.postgres.url }}"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backup-script
+data:
+  backup_script.sh: |
+    #!/bin/bash
+    apt-get update
+    apt-get install -y curl gpg ca-certificates postgresql-client
+  
+    curl -sL https://aka.ms/downloadazcopy-v10-linux | tar --strip-components=1 -xz -C /usr/local/bin
+   
+    echo "Taking PostgreSQL backup..."
+    pg_dumpall -U $USER -h $HOST -p $PORT -v -f "/tmp/backup$(date +'%Y-%m-%d')"
+ 
+    echo "Compressing the backup file into a tarball..."
+    tar -czf "/tmp/backup$(date +'%Y-%m-%d').tar.gz" -C /tmp/backup$(date +'%Y-%m-%d')
+
+    echo "Storing PostgreSQL backup to Azure Blob Storage..."
+    azcopy copy "/tmp/backup$(date +'%Y-%m-%d').tar.gz" "$URL/backup/backup$(date +'%Y-%m-%d')$AZURE_SAS_TOKEN"

@@ -1,0 +1,8 @@
+postgres:
+  user: "postgres"
+  host: "20.207.72.66"
+  port: "5432"
+  url: "https://backuppost.blob.core.windows.net"
+
+cronjob:
+  schedule: "0 11 * * *"

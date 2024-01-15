@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mychart.fullname" . }}-pg-config
+data:
+  POSTGRES_USER: "{{ .Values.postgres.user | default "postgres" }}"
+  POSTGRES_HOST: "{{ include "mychart.host" . }}"
+  POSTGRES_PORT: "{{ .Values.postgres.port | default "5432"}}"
+  
+  URL: "{{ .Values.postgres.url }}"

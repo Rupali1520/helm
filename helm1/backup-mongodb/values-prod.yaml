@@ -1,0 +1,12 @@
+# postgres:
+#   user: "myAdmin"
+#   host: "20.207.72.66"
+#   port: "27017"
+#   url: "https://backuppost.blob.core.windows.net"
+
+cronjob:
+  schedule: "0 11 * * *"
+file:
+  filename: backup-prod
+folder:
+  foldername: prod
